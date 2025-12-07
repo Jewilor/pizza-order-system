@@ -1,0 +1,42 @@
+﻿# 1. азвание Workflow, которое будет отображаться в GitHub
+name: Java CI with Gradle
+
+# 2. Триггер: запускать workflow при push в ветку 'main'
+# или при создании Pull Request в ветку 'main'
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# 3. аботы (jobs), которые нужно выполнить
+jobs:
+  # 4. азвание работы (job_id) - "build"
+  build:
+
+    # 5. а какой С запускать. GitHub предоставит нам виртуальную машину.
+    runs-on: ubuntu-latest
+
+    # 6. Шаги (steps), которые нужно выполнить последовательно
+    steps:
+      # Шаг 1: Скачиваем код из нашего репозитория в виртуальную машину
+      # 'uses' означает использование готового экшена (action)
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Шаг 2: Устанавливаем нужную версию Java (JDK 17)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin' # опулярный и надежный дистрибутив Java
+
+      # Шаг 3: аем права на выполнение Gradle-скрипту (важно для Linux/macOS)
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # Шаг 4: апускаем сборку и тесты с помощью Gradle
+      # оманда './gradlew build' автоматически компилирует код и запускает тесты
+      # сли тесты не пройдут, команда завершится с ошибкой, и весь workflow "упадет"
+      - name: Build with Gradle
+        run: ./gradlew build
