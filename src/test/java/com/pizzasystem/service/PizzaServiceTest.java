@@ -9,29 +9,23 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Тесты для класса PizzaService.
- */
 class PizzaServiceTest {
 
     private PizzaService pizzaService;
     private Customer customer1;
-    private Customer customer2;
     private Customer customerWithNoOrders;
 
-    // Этот метод будет выполняться ПЕРЕД каждым тестом (@Test)
-    // Он идеально подходит для подготовки тестовых данных.
     @BeforeEach
     void setUp() {
-        // Arrange (Подготовка): создаем общие данные для всех тестов
-        customer1 = new Customer(1, "Иван Иванов");
-        customer2 = new Customer(2, "Петр Петров");
-        customerWithNoOrders = new Customer(3, "Анна Сидорова");
+        // Arrange: set up common data for all tests
+        customer1 = new Customer(1, "John Doe");
+        Customer customer2 = new Customer(2, "Peter Jones");
+        customerWithNoOrders = new Customer(3, "Anna Smith");
 
         List<Pizza> menu = List.of(
-                new Pizza("Маргарита", Size.MEDIUM, 350.0),
-                new Pizza("Пепперони", Size.LARGE, 450.0),
-                new Pizza("Четыре сыра", Size.MEDIUM, 400.0)
+                new Pizza("Margarita", Size.MEDIUM, 350.0),
+                new Pizza("Pepperoni", Size.LARGE, 450.0),
+                new Pizza("Four Cheese", Size.MEDIUM, 400.0)
         );
 
         List<Order> orders = List.of(
@@ -44,48 +38,38 @@ class PizzaServiceTest {
     }
 
     @Test
-    @DisplayName("Должен находить все заказы для существующего клиента")
+    @DisplayName("Should find all orders for an existing customer")
     void shouldFindAllOrdersForExistingCustomer() {
-        // Act (Действие): вызываем тестируемый метод
+        // Act
         List<Order> foundOrders = pizzaService.findOrdersByCustomer(customer1);
 
-        // Assert (Проверка): проверяем, что результат соответствует ожиданиям
-        assertEquals(2, foundOrders.size(), "Должно быть найдено 2 заказа для клиента 1");
-        // Убедимся, что все найденные заказы действительно принадлежат Ивану
+        // Assert
+        assertEquals(2, foundOrders.size(), "Should find 2 orders for customer 1");
         assertTrue(foundOrders.stream().allMatch(order -> order.getCustomer().getId() == customer1.getId()));
     }
 
+    // ... (остальные тесты остаются без изменений, так как они не зависят от имен)
     @Test
-    @DisplayName("Должен возвращать пустой список для клиента без заказов")
+    @DisplayName("Should return an empty list for a customer with no orders")
     void shouldReturnEmptyListForCustomerWithNoOrders() {
-        // Act
         List<Order> foundOrders = pizzaService.findOrdersByCustomer(customerWithNoOrders);
-
-        // Assert
-        assertNotNull(foundOrders, "Список не должен быть null");
-        assertTrue(foundOrders.isEmpty(), "Список заказов для клиента без заказов должен быть пустым");
+        assertNotNull(foundOrders);
+        assertTrue(foundOrders.isEmpty());
     }
 
     @Test
-    @DisplayName("Должен правильно фильтровать пиццы по размеру MEDIUM")
+    @DisplayName("Should correctly filter pizzas by MEDIUM size")
     void shouldFilterPizzasBySizeMedium() {
-        // Act
         List<Pizza> mediumPizzas = pizzaService.filterPizzasBySize(Size.MEDIUM);
-
-        // Assert
-        assertEquals(2, mediumPizzas.size(), "Должно быть найдено 2 пиццы размера MEDIUM");
-        // Убедимся, что все найденные пиццы действительно среднего размера
+        assertEquals(2, mediumPizzas.size());
         assertTrue(mediumPizzas.stream().allMatch(pizza -> pizza.getSize() == Size.MEDIUM));
     }
 
     @Test
-    @DisplayName("Должен возвращать пустой список, если пицц нужного размера нет")
+    @DisplayName("Should return an empty list if no pizzas of the given size exist")
     void shouldReturnEmptyListForSizeWithNoPizzas() {
-        // Act
         List<Pizza> smallPizzas = pizzaService.filterPizzasBySize(Size.SMALL);
-
-        // Assert
-        assertNotNull(smallPizzas, "Список не должен быть null");
-        assertTrue(smallPizzas.isEmpty(), "Список пицц размера SMALL должен быть пустым");
+        assertNotNull(smallPizzas);
+        assertTrue(smallPizzas.isEmpty());
     }
 }

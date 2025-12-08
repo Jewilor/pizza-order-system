@@ -7,36 +7,36 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        // --- Создаем тестовые данные ---
-        // Клиенты
-        Customer customer1 = new Customer(1, "Иван Иванов");
-        Customer customer2 = new Customer(2, "Петр Петров");
+        // --- Create mock data ---
+        // Customers
+        Customer customer1 = new Customer(1, "John Doe");
+        Customer customer2 = new Customer(2, "Peter Jones");
 
-        // Пиццы в меню
+        // Pizza menu
         List<Pizza> menu = List.of(
-                new Pizza("Маргарита", Size.MEDIUM, 350.0),
-                new Pizza("Пепперони", Size.LARGE, 450.0),
-                new Pizza("Четыре сыра", Size.MEDIUM, 400.0),
-                new Pizza("Гавайская", Size.SMALL, 300.0),
-                new Pizza("Пепперони", Size.MEDIUM, 400.0)
+                new Pizza("Margarita", Size.MEDIUM, 350.0),
+                new Pizza("Pepperoni", Size.LARGE, 450.0),
+                new Pizza("Four Cheese", Size.MEDIUM, 400.0),
+                new Pizza("Hawaiian", Size.SMALL, 300.0),
+                new Pizza("Pepperoni", Size.MEDIUM, 400.0)
         );
 
-        // История заказов
+        // Order history
         List<Order> orders = List.of(
                 new Order(101, customer1, List.of(menu.get(0), menu.get(1))),
                 new Order(102, customer2, List.of(menu.get(2))),
                 new Order(103, customer1, List.of(menu.get(3)))
         );
 
-        // Инициализируем сервис
+        // Initialize the service
         PizzaService service = new PizzaService(menu, orders);
 
-        // --- Демонстрация операций ---
-        System.out.println("--- 1. Поиск заказов по клиенту (Иван Иванов) ---");
-        List<Order> ivanOrders = service.findOrdersByCustomer(customer1);
-        ivanOrders.forEach(System.out::println);
+        // --- Demonstrate operations ---
+        System.out.println("--- 1. Finding orders for customer (John Doe) ---");
+        List<Order> johnOrders = service.findOrdersByCustomer(customer1);
+        johnOrders.forEach(System.out::println);
 
-        System.out.println("\n--- 2. Фильтрация пицц по размеру (MEDIUM) ---");
+        System.out.println("\n--- 2. Filtering pizzas by size (MEDIUM) ---");
         List<Pizza> mediumPizzas = service.filterPizzasBySize(Size.MEDIUM);
         mediumPizzas.forEach(System.out::println);
     }
