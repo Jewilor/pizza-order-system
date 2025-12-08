@@ -51,7 +51,7 @@ Pizza{name='Pepperoni', size=MEDIUM, price=400.0}
 
 2.  **Склонируйте репозиторий** на свой компьютер, используя URL вашего репозитория:
     ```bash
-    git clone https://github.com/YourUsername/pizza-order-system.git
+    git clone https://github.com/Jewilor/pizza-order-system.git
     ```
 
 3.  **Перейдите в директорию проекта:**
