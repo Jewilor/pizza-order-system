@@ -60,7 +60,7 @@ Pizza{name='Pepperoni', size=MEDIUM, price=400.0}
         ```
     *   Для **Windows** (CMD / PowerShell):
         ```bash
-        gradlew.bat build
+        .\gradlew.bat build
         ```
 
     После успешной сборки в директории `build/libs/` появится готовый JAR-файл.
@@ -75,7 +75,7 @@ Pizza{name='Pepperoni', size=MEDIUM, price=400.0}
     ```
 *   Для **Windows**:
     ```bash
-    gradlew.bat test
+    .\gradlew.bat test
     ```
 Успешное выполнение тестов завершится сообщением `BUILD SUCCESSFUL`.
 
@@ -93,7 +93,7 @@ Pizza{name='Pepperoni', size=MEDIUM, price=400.0}
     ```
 *   Для **Windows**:
     ```bash
-    gradlew.bat run
+    .\gradlew.bat run
     ```
 
 ### Способ 2: Напрямую через JAR-файл (после сборки)
